@@ -43,7 +43,7 @@ const Footer: FunctionComponent = () => {
                 </div>
             </div>
             <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between">
-                <p className="text-sm">&copy; 2024 Upwork® Global Inc.</p>
+                <p className="text-sm">&copy; 2024 Freelancing® Global Inc.</p>
                 <div className="flex items-center space-x-4 mt-4 sm:mt-0">
                     <Link href="#" className="text-gray-400 hover:text-white">
                         <Globe className="h-5 w-5" />
@@ -54,6 +54,7 @@ const Footer: FunctionComponent = () => {
                         <span className="sr-only">Privacy Policy</span>
                     </Link>
                 </div>
+                <span className="text-1xl py-5 text-green-600 dark:text-green-100 playwrite-gb-s-400-italic">Freelancing</span>
             </div>
         </div>
     </footer>);

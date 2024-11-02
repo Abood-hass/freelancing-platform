@@ -1,13 +1,18 @@
-import { useState } from "react"
+import { useContext, } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Github } from "@/components/icons/gitHub"
 import Link from "next/link"
 import { Google } from "@/components/icons/google"
+import { LoadingContext, LoadingContextType } from "@/context/LoadingContext"
+import { Spline } from "lucide-react"
+import { registerRoute } from "@/routes/all-routes"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const { isLoading, setIsLoading } = useContext<LoadingContextType>(LoadingContext);
+    const router = useRouter();
 
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
@@ -15,16 +20,20 @@ export default function LoginPage() {
 
         setTimeout(() => {
             setIsLoading(false)
+
+            router.push('/')
         }, 3000)
     }
 
     return (
-        <div className="container flex h-screen w-screen flex-col items-center justify-center">
-            <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+        <div className="flex h-screen w-full flex-col items-center justify-center ">
+            <div className="mx-auto flex w-10/12 md:w-3/5 xl:w-1/3 flex-col justify-center space-y-6 dark:bg-slate-800 p-8 rounded-md ">
                 <div className="flex flex-col space-y-2 text-center">
-                    {/* <Icons.logo className="mx-auto h-6 w-6" /> */}
-                    <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className="text-4xl mb-10 text-green-600 dark:text-green-100 playwrite-gb-s-400-italic">
+                        Freelancing
+                    </h1>
+                    <h4 className="text-2xl font-semibold tracking-tight">Welcome back</h4>
+                    <p className="text-sm text-muted-foreground dark:text-green-50">
                         Enter your email to sign in to your account
                     </p>
                 </div>
@@ -60,8 +69,8 @@ export default function LoginPage() {
                                 />
                             </div>
                             <Button disabled={isLoading}>
-                                {isLoading && (<></>
-                                    // <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                {isLoading && (
+                                    <Spline className="mr-2 h-4 w-4 animate-spin" />
                                 )}
                                 Sign In
                             </Button>
@@ -72,7 +81,7 @@ export default function LoginPage() {
                             <span className="w-full border-t" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background px-2 text-muted-foreground">
+                            <span className="dark:text-green-50 bg-background px-2 text-muted-foreground">
                                 Or continue with
                             </span>
                         </div>
@@ -88,18 +97,18 @@ export default function LoginPage() {
                         </Button>
                     </div>
                 </div>
-                <div className="flex flex-col space-y-2 text-center text-sm">
+                <div className="flex flex-col space-y-2 text-center text-sm ">
                     <Link
                         aria-label="Forgot password"
                         href="/forgot-password"
-                        className="text-muted-foreground underline-offset-4 transition-colors hover:underline"
+                        className="text-muted-foreground underline-offset-4 transition-colors hover:underline dark:text-green-50"
                     >
                         Forgot password?
                     </Link>
                     <Link
                         aria-label="Sign up"
-                        href="/signup"
-                        className="text-muted-foreground underline-offset-4 transition-colors hover:underline"
+                        href={registerRoute}
+                        className="text-muted-foreground underline-offset-4 transition-colors hover:underline dark:text-green-50"
                     >
                         Don't have an account? Sign Up
                     </Link>

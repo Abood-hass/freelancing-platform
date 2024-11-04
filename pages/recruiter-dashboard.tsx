@@ -16,6 +16,7 @@ import {
   Search,
   Filter
 } from 'lucide-react'
+import EditProfile from '@/components/editProfileSection'
 
 export default function RecruiterDashboard() {
   return (
@@ -26,6 +27,9 @@ export default function RecruiterDashboard() {
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Welcome back, Sarah!</h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Here's an overview of your recruitment activities.</p>
         </div>
+
+        {/* Edit Profile */}
+        <EditProfile />
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -70,7 +74,7 @@ export default function RecruiterDashboard() {
             </CardContent>
           </Card>
         </div>
-        
+
 
         {/* Active Job Postings */}
         <Card className="mb-8">

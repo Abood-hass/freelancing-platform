@@ -171,7 +171,7 @@ class Header extends Component<HeaderProps> {
 
     render() {
 
-        return (<header className={cn("border-b ", this.props.router.pathname.includes("/login") ? " hidden" : '')}>
+        return (<header className={cn("border-b sticky left-0 top-0 bg-white dark:bg-slate-800 border-green-600", this.props.router.pathname.includes("/login") ? " hidden" : '')}>
             <div className=" mx-auto px-4 py-4 flex items-center justify-between">
                 <Link className="flex items-center justify-center" href="#">
                     <span className="text-xl xl:text-2xl text-green-600 dark:text-green-100 playwrite-gb-s-400-italic">Freelancing</span>

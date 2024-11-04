@@ -1,4 +1,4 @@
-import { useContext, } from "react"
+import { useContext, useRef, } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,18 +9,33 @@ import { LoadingContext, LoadingContextType } from "@/context/LoadingContext"
 import { Spline } from "lucide-react"
 import { registerRoute } from "@/routes/all-routes"
 import { useRouter } from "next/navigation"
+import { counterStore } from "@/context/UserData"
 
 export default function LoginPage() {
     const { isLoading, setIsLoading } = useContext<LoadingContextType>(LoadingContext);
     const router = useRouter();
+    const emailRef = useRef(null);
 
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         setIsLoading(true)
 
         setTimeout(() => {
-            setIsLoading(false)
 
+
+            counterStore.setUserData(
+                {
+                    data: {
+                        FullName: "John Doe",
+                        Email: "john.doe@example.com",
+                        ImageURL: "https://github.com/shadcn.png",
+                        PhoneNumber: "+970567739413",
+                        Country: "Palestine"
+                    }
+                }
+            )
+
+            setIsLoading(false)
             router.push('/')
         }, 3000)
     }
@@ -45,6 +60,7 @@ export default function LoginPage() {
                                     Email
                                 </Label>
                                 <Input
+                                    ref={emailRef}
                                     id="email"
                                     placeholder="name@example.com"
                                     type="email"

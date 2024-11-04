@@ -1,4 +1,4 @@
-import { useContext, } from "react"
+import { useContext, useRef, useState, } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,17 +10,36 @@ import { Spline } from "lucide-react"
 import { Select, SelectContent, SelectGroup, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { SelectItem } from "@radix-ui/react-select"
 import { loginRoute } from "@/routes/all-routes"
+import { useRouter } from "next/navigation"
+import { DatePicker } from "@/components/ui/date-picker"
 
 export default function LoginPage() {
     const { isLoading, setIsLoading } = useContext<LoadingContextType>(LoadingContext);
+    const router = useRouter();
+    const [DoB, setDoB] = useState<Date>(new Date("1/1/1999"))
+
+    const emailRef = useRef<HTMLInputElement>(null);
+    const firstNameRef = useRef<HTMLInputElement>(null);
+    const lastNameRef = useRef<HTMLInputElement>(null);
+    const countryRef = useRef<HTMLInputElement>(null);
+
 
 
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         setIsLoading(true)
 
+        const values = {
+            FullName: (firstNameRef.current && firstNameRef.current.value) + " " + (lastNameRef.current && lastNameRef.current.value),
+            Email: emailRef.current && emailRef.current.value,
+            Country: countryRef.current && countryRef.current.value,
+            dob: DoB.getDate() + "/" + (DoB.getMonth() + 1) + "/" + DoB.getFullYear(),
+        }
+
         setTimeout(() => {
+            console.log(values)
             setIsLoading(false)
+            router.push('/login')
         }, 3000)
     }
 
@@ -42,6 +61,7 @@ export default function LoginPage() {
                                         First Name
                                     </Label>
                                     <Input
+                                        ref={firstNameRef}
                                         id="fname"
                                         placeholder="Abdullah"
                                         type="text"
@@ -55,6 +75,7 @@ export default function LoginPage() {
                                         Last Name
                                     </Label>
                                     <Input
+                                        ref={lastNameRef}
                                         id="lname"
                                         placeholder="Hassouna"
                                         type="text"
@@ -66,27 +87,20 @@ export default function LoginPage() {
                             </div>
                             <div className="grid grid-cols-2 gap-1">
                                 <div>
-                                    <Label className="sr-only" htmlFor="dob">
+                                    <Label className="sr-only" htmlFor="country">
                                         Date of Birth
                                     </Label>
-                                    <Input
-                                        id="dob"
-                                        placeholder="09/11/0000"
-                                        type="date"
-                                        autoCorrect="off"
-                                        disabled={isLoading}
-                                    />
+                                    <DatePicker title="Date of Birth" DoB={DoB} setDoB={setDoB} />
                                 </div>
                                 <div>
-                                    <Label className="sr-only" htmlFor="lname">
-                                        First Name
+                                    <Label className="sr-only" htmlFor="country">
+                                        Country
                                     </Label>
                                     <Input
-                                        id="lname"
-                                        placeholder="Hassouna"
+                                        ref={countryRef}
+                                        id="country"
+                                        placeholder="Palestine"
                                         type="text"
-                                        autoComplete="name"
-                                        autoCorrect="off"
                                         disabled={isLoading}
                                     />
                                 </div>
@@ -96,6 +110,7 @@ export default function LoginPage() {
                                     Email
                                 </Label>
                                 <Input
+                                    ref={emailRef}
                                     id="email"
                                     placeholder="name@example.com"
                                     type="email"
